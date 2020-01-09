@@ -32,6 +32,6 @@ services:
         MAVEN_VERSION: 3.6.3
         DOTNET_VERSION: 3.1.0
         ASPNETCORE_VERSION: 3.1.0
-        DOTNET_SDK_VERSION: 3.1.0
+        DOTNET_SDK_VERSION: 3.1.100
         CRAN_MIRROR: https://cloud.r-project.org/
         PROMETHEUS_EXPORTER_VERSION: 0.12.0

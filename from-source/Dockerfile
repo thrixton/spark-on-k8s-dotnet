@@ -25,7 +25,7 @@ ARG MAVEN_VERSION=3.6.3
 # dotnet args
 ARG DOTNET_VERSION=3.1.0
 ARG ASPNETCORE_VERSION=3.1.0
-ARG DOTNET_SDK_VERSION=3.1.0
+ARG DOTNET_SDK_VERSION=3.1.100
 
 # dotnet spark args
 ARG SPARK_DOTNET_TAG=master
@@ -189,7 +189,7 @@ RUN mkdir -p ${MAVEN_HOME}/ref && \
 RUN echo "dotnet source: ${DOTNET_SDK_URL}"
 
 # dotnet install
-RUN curl -SL --output dotnet.tar.gz ${DOTNET_SDK_URL} && \
+RUN curl -fsSL --output dotnet.tar.gz ${DOTNET_SDK_URL} && \
     mkdir -p ${DOTNET_ROOT} && \
     tar -zxf dotnet.tar.gz -C ${DOTNET_ROOT} && \
     rm dotnet.tar.gz && \
