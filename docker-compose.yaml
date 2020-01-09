@@ -29,9 +29,9 @@ services:
         SCALA_BINARY_VERSION: 2.12
         SCALA_VERSION: 2.12.8
         JAVA_VERSION: 8u222
-        MAVEN_VERSION: 3.6.1
-        DOTNET_VERSION: 3.0.0-preview8-28405-07
-        ASPNETCORE_VERSION: 3.0.0-preview8.19405.7
-        DOTNET_SDK_VERSION: 3.0.100-preview8-013656
+        MAVEN_VERSION: 3.6.3
+        DOTNET_VERSION: 3.1.0
+        ASPNETCORE_VERSION: 3.1.0
+        DOTNET_SDK_VERSION: 3.1.0
         CRAN_MIRROR: https://cloud.r-project.org/
         PROMETHEUS_EXPORTER_VERSION: 0.12.0
