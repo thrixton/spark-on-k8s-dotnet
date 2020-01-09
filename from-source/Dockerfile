@@ -185,6 +185,9 @@ RUN mkdir -p ${MAVEN_HOME}/ref && \
     ln -svf ${MAVEN_HOME}/bin/mvn /usr/bin/mvn && \
     mvn --version
 
+# Debug
+RUN echo "dotnet source: ${DOTNET_SDK_URL}"
+
 # dotnet install
 RUN curl -SL --output dotnet.tar.gz ${DOTNET_SDK_URL} && \
     mkdir -p ${DOTNET_ROOT} && \
