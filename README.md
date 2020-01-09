@@ -1,15 +1,16 @@
 # spark-on-k8s-dotnet
+
 [Kubernetes](https://github.com/kubernetes/kubernetes) friendly [Spark](https://github.com/apache/spark) [Docker](https://github.com/docker) images with [dotnet/spark](https://github.com/dotnet/spark) for working with [GoogleCloudPlatform/spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/)
 
-
 ## References
+
 - [Spark](https://github.com/apache/spark)
 - [dotnet/spark](https://github.com/dotnet/spark)
 - [spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator)
 - [spark-on-k8s-operator helm chart](https://github.com/helm/charts/tree/master/incubator/sparkoperator)
 
-
 ## Quick Instructions for Mac
+
 1. [Install Docker](https://docs.docker.com/docker-for-mac/install/)
 2. [Enable Kubernetes in Docker](https://docs.docker.com/docker-for-mac/#kubernetes)
 3. Initialize Tiller `./initialize-helm.sh`
@@ -17,9 +18,10 @@
 5. Create Spark Image `build-from-prebuilt.sh`
 6. Run Spark Job `apply-spark-csharp-from-prebuilt.sh`
 
-
 ## Quick Instructions for Windows
+
 NOTE: Run commands in `powershell` on Windows
+
 1. [Install Docker](https://docs.docker.com/docker-for-windows/install/)
 2. [Enable Kubernetes in Docker](https://docs.docker.com/docker-for-windows/#kubernetes)
 3. Initialize Tiller `./initialize-helm.ps1`
@@ -27,9 +29,10 @@ NOTE: Run commands in `powershell` on Windows
 5. Create Spark Image `build-from-prebuilt.ps1`
 6. Run Spark Job `apply-spark-csharp-from-prebuilt.ps1`
 
-
 ## Verbose Instructions
+
 NOTE: Run commands in `powershell` on Windows
+
 - Install Docker
   - [General](https://docs.docker.com/install/)
   - [Mac](https://docs.docker.com/docker-for-mac/install/)
@@ -48,8 +51,10 @@ NOTE: Run commands in `powershell` on Windows
   - Mac Shortcut: `./apply-k8s-dashboard.sh`
   - Windows Shortcut: `./apply-k8s-dashboard.ps1`
 - Install spark-on-k8s-operator with webhook enabled
+
   - Long Form:
-    ``` bash
+
+    ```bash
     kubectl create namespace spark-jobs
 
     helm upgrade spark-operator sparkoperator \
@@ -61,8 +66,10 @@ NOTE: Run commands in `powershell` on Windows
     --set serviceAccounts.sparkoperator.name=spark-operator \
     --repo http://storage.googleapis.com/kubernetes-charts-incubator
     ```
+
   - Mac Shortcut: `./apply-spark-on-k8s-operator.sh`
   - Windows Shortcut: `./apply-spark-on-k8s-operator.ps1`
+
 - Create Spark container image with dotnet/spark installed
   - NOTE: Choose one
   - OPTION 1 (**prebuilt**): Use prebuilt binaries from Spark and dotnet/spark
@@ -76,6 +83,19 @@ NOTE: Run commands in `powershell` on Windows
     - Long Form: `docker-compose build spark-on-k8s-dotnet-from-source`
     - Mac Shortcut: `build-from-source.sh`
     - Windows Shortcut: `build-from-source.ps1`
+- Tag and Push image (optional)
+
+  > NOTE: commands below are for prebuilt image, substitute as appropriate
+
+  - Tag
+    - Long Form: `docker tag spark-on-k8s-dotnet:v2.4.3-from-prebuilt localhost:32000/spark-on-k8s-dotnet:v2.4.3-from-prebuilt`
+    - Mac Shortcut: `TODO`
+    - Windows Shortcut: `TODO`
+  - Push
+    - Long Form: `docker push localhost:32000/spark-on-k8s-dotnet:v2.4.3-from-prebuilt`
+    - Mac Shortcut: `TODO`
+    - Windows Shortcut: `TODO`
+
 - Run dotnet sample Spark job
   - NOTE: Varies depending on if you chose **prebuilt** or **source**
   - Prebuilt: Use this option if you chose prebuilt above
@@ -87,8 +107,8 @@ NOTE: Run commands in `powershell` on Windows
     - Mac Shortcut: `apply-spark-csharp-from-source.sh`
     - Windows Shortcut: `apply-spark-csharp-from-source.ps1`
 
-
 ## Folder Layout
+
 - `/` folder
   - Shortcut scripts
   - `docker-compose.yaml` for building Spark docker images with spark/dotnet installed
