@@ -64,7 +64,7 @@ ARG CRAN_MIRROR
 
 # Maven args
 ARG MAVEN_VERSION
-ARG MAVEN_BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG MAVEN_BASE_URL=https://apache.mirror.digitalpacific.com.au/maven/maven-3/${MAVEN_VERSION}/binaries
 
 # dotnet args
 ARG DOTNET_SDK_VERSION
