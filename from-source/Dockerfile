@@ -20,7 +20,7 @@ ARG JAVA_VERSION=8u222
 ARG CRAN_MIRROR=https://cloud.r-project.org/
 
 # Maven args
-ARG MAVEN_VERSION=3.6.1
+ARG MAVEN_VERSION=3.6.3
 
 # dotnet args
 ARG DOTNET_VERSION=3.1.0
@@ -64,7 +64,7 @@ ARG CRAN_MIRROR
 
 # Maven args
 ARG MAVEN_VERSION
-ARG MAVEN_BASE_URL=https://apache.mirror.digitalpacific.com.au/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG MAVEN_BASE_URL=http://apache.mirror.digitalpacific.com.au/maven/maven-3/${MAVEN_VERSION}/binaries
 
 # dotnet args
 ARG DOTNET_SDK_VERSION
