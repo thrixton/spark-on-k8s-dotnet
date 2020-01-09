@@ -174,6 +174,9 @@ RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-
 	javac -version && \
 	java -version
 
+# Debug
+RUN echo '${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz'
+
 # Maven install
 RUN mkdir -p ${MAVEN_HOME}/ref && \
     curl -fsSL -o /tmp/apache-maven.tar.gz ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
