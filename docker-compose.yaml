@@ -23,8 +23,8 @@ services:
       target: runtime
       args:
         SPARK_TAG: v2.4.4
-        SPARK_DOTNET_TAG: master
-        SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp2.1
+        SPARK_DOTNET_TAG: v0.7.0
+        SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp3.1
         HADOOP_PROFILE: hadoop-3.1
         SCALA_BINARY_VERSION: 2.12
         SCALA_VERSION: 2.12.8
@@ -35,3 +35,4 @@ services:
         DOTNET_SDK_VERSION: 3.1.100
         CRAN_MIRROR: https://cloud.r-project.org/
         PROMETHEUS_EXPORTER_VERSION: 0.12.0
+        DOTNET_SPARK_VERSION: 2.3.x

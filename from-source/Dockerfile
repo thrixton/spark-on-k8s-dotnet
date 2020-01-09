@@ -8,31 +8,32 @@
 
 
 # Spark args
-ARG SPARK_TAG=master
-ARG HADOOP_PROFILE=hadoop-3.1
-ARG SCALA_BINARY_VERSION=2.12
-ARG SCALA_VERSION=2.12.8
+ARG SPARK_TAG
+ARG HADOOP_PROFILE
+ARG SCALA_BINARY_VERSION
+ARG SCALA_VERSION
 
 # Java args
-ARG JAVA_VERSION=8u222
+ARG JAVA_VERSION
 
 # R args
-ARG CRAN_MIRROR=https://cloud.r-project.org/
+ARG CRAN_MIRROR
 
 # Maven args
-ARG MAVEN_VERSION=3.6.3
+ARG MAVEN_VERSION
 
 # dotnet args
-ARG DOTNET_VERSION=3.1.0
-ARG ASPNETCORE_VERSION=3.1.0
-ARG DOTNET_SDK_VERSION=3.1.100
+ARG DOTNET_VERSION
+ARG ASPNETCORE_VERSION
+ARG DOTNET_SDK_VERSION
+ARG DOTNET_SPARK_VERSION
 
 # dotnet spark args
-ARG SPARK_DOTNET_TAG=master
-ARG SPARK_DOTNET_TARGET_FRAMEWORK=netcoreapp2.1
+ARG SPARK_DOTNET_TAG
+ARG SPARK_DOTNET_TARGET_FRAMEWORK
 
 # Prometheus args
-ARG PROMETHEUS_EXPORTER_VERSION=0.12.0
+ARG PROMETHEUS_EXPORTER_VERSION
 
 
 # References
@@ -69,6 +70,7 @@ ARG MAVEN_BASE_URL=http://apache.mirror.digitalpacific.com.au/maven/maven-3/${MA
 # dotnet args
 ARG DOTNET_SDK_VERSION
 ARG DOTNET_SDK_URL=https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz
+ARG DOTNET_SPARK_VERSION
 
 # dotnet spark args
 ARG SPARK_DOTNET_TAG
@@ -220,7 +222,7 @@ RUN ./dev/change-scala-version.sh ${SCALA_BINARY_VERSION} && \
 # dotnet spark build
 WORKDIR /build/spark/dotnet
 RUN cd src/scala && \
-    mvn -pl -microsoft-spark-2.3.x clean package -Dscala.binary.version=${SCALA_BINARY_VERSION} -Dscala.version=${SCALA_VERSION} && \
+    mvn -pl -microsoft-spark-${DOTNET_SPARK_VERSION} clean package -Dscala.binary.version=${SCALA_BINARY_VERSION} -Dscala.version=${SCALA_VERSION} && \
     cd ../csharp/Microsoft.Spark.Worker && \
     dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64 && \
     cd ../../../examples/Microsoft.Spark.CSharp.Examples && \
