@@ -24,7 +24,7 @@ services:
       args:
         SPARK_TAG: v2.4.4
         SPARK_DOTNET_TAG: v0.7.0
-        SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp3.1
+        SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp2.1
         HADOOP_PROFILE: hadoop-3.1
         SCALA_BINARY_VERSION: 2.12
         SCALA_VERSION: 2.12.8

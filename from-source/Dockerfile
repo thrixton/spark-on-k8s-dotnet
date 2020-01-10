@@ -221,14 +221,14 @@ RUN ./dev/change-scala-version.sh ${SCALA_BINARY_VERSION} && \
 
 # dotnet spark build
 WORKDIR /build/spark/dotnet
-RUN cd src/scala && \
-    mvn -pl -microsoft-spark-${DOTNET_SPARK_VERSION} clean package -Dscala.binary.version=${SCALA_BINARY_VERSION} -Dscala.version=${SCALA_VERSION} && \
-    cd ../csharp/Microsoft.Spark.Worker && \
-    dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64 && \
-    cd ../../../examples/Microsoft.Spark.CSharp.Examples && \
-    dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64 && \
-    cd ../Microsoft.Spark.FSharp.Examples && \
-    dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64
+RUN cd src/scala 
+RUN mvn -pl -microsoft-spark-${DOTNET_SPARK_VERSION} clean package -Dscala.binary.version=${SCALA_BINARY_VERSION} -Dscala.version=${SCALA_VERSION}
+RUN cd ../csharp/Microsoft.Spark.Worker
+RUN dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64
+RUN cd ../../../examples/Microsoft.Spark.CSharp.Examples
+RUN dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64
+RUN cd ../Microsoft.Spark.FSharp.Examples
+RUN dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64
 
 
 # References
