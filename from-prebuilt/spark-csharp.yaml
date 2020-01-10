@@ -10,7 +10,7 @@ spec:
   #image: "spark-on-k8s-dotnet:v2.4.3-from-prebuilt"
   imagePullPolicy: IfNotPresent
   mainClass: org.apache.spark.deploy.dotnet.DotnetRunner
-  mainApplicationFile: "local:///opt/spark/jars/microsoft-spark-2.4.x-0.4.0.jar"
+  mainApplicationFile: "local:///opt/spark/jars/microsoft-spark-2.4.x-0.7.0.jar"
   arguments:
     - "dotnet"
     - "Microsoft.Spark.CSharp.Examples.dll"
