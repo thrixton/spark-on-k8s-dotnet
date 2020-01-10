@@ -88,11 +88,11 @@ NOTE: Run commands in `powershell` on Windows
   > NOTE: commands below are for prebuilt image, substitute as appropriate
 
   - Tag
-    - Long Form: `docker tag spark-on-k8s-dotnet:v2.4.3-from-prebuilt localhost:32000/spark-on-k8s-dotnet:v2.4.3-from-prebuilt`
+    - Long Form: `docker tag spark-on-k8s-dotnet:v2.4.4-from-prebuilt localhost:32000/spark-on-k8s-dotnet:v2.4.4-from-prebuilt`
     - Mac Shortcut: `TODO`
     - Windows Shortcut: `TODO`
   - Push
-    - Long Form: `docker push localhost:32000/spark-on-k8s-dotnet:v2.4.3-from-prebuilt`
+    - Long Form: `docker push localhost:32000/spark-on-k8s-dotnet:v2.4.4-from-prebuilt`
     - Mac Shortcut: `TODO`
     - Windows Shortcut: `TODO`
 
