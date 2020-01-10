@@ -10,24 +10,25 @@
 # https://github.com/dotnet/spark/blob/master/docs/getting-started/ubuntu-instructions.md
 # https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x
 
+# All args are declared in the ../docker-compose.yaml file
 
 # Spark args
-ARG SPARK_VERSION=2.4.3
-ARG SPARK_SUFFIX=hadoop2.7
+ARG SPARK_VERSION
+ARG SPARK_SUFFIX
 
 # Java args
-ARG JAVA_VERSION=8u222
+ARG JAVA_VERSION
 
 # dotnet args
-ARG DOTNET_PACKAGE=aspnetcore-runtime-2.2
-ARG DOTNET_SDK_PACKAGE=dotnet-sdk-2.2
+ARG DOTNET_PACKAGE
+ARG DOTNET_SDK_PACKAGE
 
 # dotnet spark args
-ARG SPARK_DOTNET_VERSION=0.4.0
-ARG SPARK_DOTNET_TARGET_FRAMEWORK=netcoreapp2.1
+ARG SPARK_DOTNET_VERSION
+ARG SPARK_DOTNET_TARGET_FRAMEWORK
 
 # Prometheus args
-ARG PROMETHEUS_EXPORTER_VERSION=0.12.0
+ARG PROMETHEUS_EXPORTER_VERSION
 
 
 # References
