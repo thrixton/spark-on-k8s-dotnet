@@ -101,9 +101,9 @@ RUN mkdir -p spark && \
     wget ${SPARK_URL} && \
     tar xvzf ${SPARK_FILE} -C spark --strip-components=1 && \
     wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/${DELTA_CORE_JAR} && \
-    mv ./${DELTA_CORE_JAR} ./${SPARK_DIR}/jars/ && \
+    mv ./${DELTA_CORE_JAR} ./spark/${SPARK_DIR}/jars/ && \
     wget ${MAVEN_BASE_URL}/org/apache/hadoop/hadoop-azure/${HADOOP_AZURE_VERSION}/${HADOOP_AZURE_JAR} && \
-    mv ./${HADOOP_AZURE_JAR} ./${SPARK_DIR}/jars/ && \
+    mv ./${HADOOP_AZURE_JAR} ./spark/${SPARK_DIR}/jars/ && \
     rm -f ${SPARK_FILE}
 
 # dotnet spark install
