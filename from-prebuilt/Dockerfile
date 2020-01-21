@@ -51,6 +51,11 @@ ARG SPARK_DOTNET_FILE=Microsoft.Spark.Worker.${SPARK_DOTNET_TARGET_FRAMEWORK}.li
 ARG SPARK_DOTNET_SOURCE_FILE=v${SPARK_DOTNET_VERSION}.tar.gz
 ARG SPARK_DOTNET_URL=https://github.com/dotnet/spark/releases/download/v${SPARK_DOTNET_VERSION}/${SPARK_DOTNET_FILE}
 ARG SPARK_DOTNET_SOURCE_URL=https://github.com/dotnet/spark/archive/${SPARK_DOTNET_SOURCE_FILE}
+ARG DELTA_CORE_VERSION
+ARG HADOOP_AZURE_VERSION
+ARG SCALA_BINARY_VERSION
+ARG MAVEN_BASE_URL
+
 
 # Linux vars
 ENV DEBIAN_FRONTEND=noninteractive
@@ -92,6 +97,10 @@ RUN apt-get install -y \
 RUN mkdir -p spark && \
     wget ${SPARK_URL} && \
     tar xvzf ${SPARK_FILE} -C spark --strip-components=1 && \
+    wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/delta-core_${SCALA_BINARY_VERSION}-${DELTA_CORE_VERSION}.jar && \
+    mv ./delta-core_${SCALA_BINARY_VERSION}-${DELTA_CORE_VERSION}.jar ./jars/ && \
+    wget ${MAVEN_BASE_URL}/org/apache/hadoop/hadoop-azure/${HADOOP_AZURE_VERSION}/hadoop-azure-${HADOOP_AZURE_VERSION}.jar && \
+    mv ./hadoop-azure-${HADOOP_AZURE_VERSION}.jar ./jars/ && \
     rm -f ${SPARK_FILE}
 
 # dotnet spark install
