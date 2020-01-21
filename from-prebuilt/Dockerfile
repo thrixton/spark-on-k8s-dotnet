@@ -38,7 +38,8 @@ FROM openjdk:${JAVA_VERSION}-jdk-slim-buster as build
 # Spark args
 ARG SPARK_VERSION
 ARG SPARK_SUFFIX
-ARG SPARK_FILE=spark-${SPARK_VERSION}-bin-${SPARK_SUFFIX}.tgz
+ARG SPARK_DIR=spark-${SPARK_VERSION}-bin-${SPARK_SUFFIX}
+ARG SPARK_FILE=${SPARK_DIR}.tgz
 ARG SPARK_URL=https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_FILE}
 
 # dotnet args
@@ -55,6 +56,8 @@ ARG DELTA_CORE_VERSION
 ARG HADOOP_AZURE_VERSION
 ARG SCALA_BINARY_VERSION
 ARG MAVEN_BASE_URL
+ARG DELTA_CORE_JAR=delta-core_${SCALA_BINARY_VERSION}-${DELTA_CORE_VERSION}.jar
+ARG HADOOP_AZURE_JAR=hadoop-azure-${HADOOP_AZURE_VERSION}.jar
 
 
 # Linux vars
@@ -97,10 +100,10 @@ RUN apt-get install -y \
 RUN mkdir -p spark && \
     wget ${SPARK_URL} && \
     tar xvzf ${SPARK_FILE} -C spark --strip-components=1 && \
-    wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/delta-core_${SCALA_BINARY_VERSION}-${DELTA_CORE_VERSION}.jar && \
-    mv ./delta-core_${SCALA_BINARY_VERSION}-${DELTA_CORE_VERSION}.jar ./jars/ && \
-    wget ${MAVEN_BASE_URL}/org/apache/hadoop/hadoop-azure/${HADOOP_AZURE_VERSION}/hadoop-azure-${HADOOP_AZURE_VERSION}.jar && \
-    mv ./hadoop-azure-${HADOOP_AZURE_VERSION}.jar ./jars/ && \
+    wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/${DELTA_CORE_JAR} && \
+    mv ./${DELTA_CORE_JAR} ./${SPARK_DIR}/jars/ && \
+    wget ${MAVEN_BASE_URL}/org/apache/hadoop/hadoop-azure/${HADOOP_AZURE_VERSION}/${HADOOP_AZURE_JAR} && \
+    mv ./${HADOOP_AZURE_JAR} ./${SPARK_DIR}/jars/ && \
     rm -f ${SPARK_FILE}
 
 # dotnet spark install
