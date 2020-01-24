@@ -23,7 +23,7 @@ services:
     image: spark-on-k8s-dotnet:v2.4.4
     build:
       context: .
-      dockerfile: ./from-prebuilt/Dockerfile
+      dockerfile: ./from-prebuilt-2/Dockerfile
       target: runtime
       args:
         SPARK_VERSION: 2.4.4

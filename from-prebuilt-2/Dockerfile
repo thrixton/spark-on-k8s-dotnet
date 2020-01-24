@@ -107,9 +107,11 @@ ARG SPARK_INSTALL_DIR=/opt/spark-${SPARK_VERSION}
 RUN mkdir -p ${SPARK_INSTALL_DIR} && \
     wget ${SPARK_URL} && \
     tar xvzf ${SPARK_FILE} -C ${SPARK_INSTALL_DIR} --strip-components=1 && \
-    wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/${DELTA_CORE_JAR} && \
-    mv ./${DELTA_CORE_JAR} ${SPARK_INSTALL_DIR}/jars/ && \
     rm -f ${SPARK_FILE}
+
+# Delta.io support
+RUN wget ${MAVEN_BASE_URL}/io/delta/delta-core_${SCALA_BINARY_VERSION}/${DELTA_CORE_VERSION}/${DELTA_CORE_JAR} && \
+    mv ./${DELTA_CORE_JAR} ${SPARK_INSTALL_DIR}/jars/
 
 ARG HADOOP_INSTALL_DIR=/opt/hadoop-${HADOOP_VERSION}
 
@@ -183,6 +185,15 @@ ENV SPARKDOTNET_ROOT=${DOTNET_WORKER_DIR} \
 RUN set -eux && \
     apt-get update && \
     apt-get upgrade -y
+
+# Linux update
+RUN set -eux && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+    apt-utils && \
+    apt-get autoremove -y
+WORKDIR /build
 
 # Spark deps
 RUN apt-get install -y --no-install-recommends \
