@@ -20,6 +20,27 @@ services:
         SCALA_BINARY_VERSION: 2.11
         MAVEN_BASE_URL: https://repo.maven.apache.org/maven2
 
+spark-on-k8s-dotnet-from-prebuilt-2:
+    image: spark-on-k8s-dotnet:v2.4.4
+    build:
+      context: .
+      dockerfile: ./from-prebuilt/Dockerfile
+      target: runtime
+      args:
+        SPARK_VERSION: 2.4.4
+        SPARK_SUFFIX: without-hadoop
+        HADOOP_VERSION: 2.10.0
+        SPARK_DOTNET_VERSION: 0.7.0
+        SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp2.1
+        JAVA_VERSION: 8u222
+        DOTNET_PACKAGE: aspnetcore-runtime-3.1
+        DOTNET_SDK_PACKAGE: dotnet-sdk-3.1
+        PROMETHEUS_EXPORTER_VERSION: 0.12.0
+        DELTA_CORE_VERSION: 0.5.0
+        HADOOP_AZURE_STORAGE_VERSION: 5.4.0
+        SCALA_BINARY_VERSION: 2.11
+        MAVEN_BASE_URL: https://repo.maven.apache.org/maven2
+
   spark-on-k8s-dotnet-from-source:
     image: spark-on-k8s-dotnet:v2.4.4-from-source
     build:

@@ -1,0 +1,66 @@
+ARG JAVA_VERSION=8u222
+# References
+# https://dotnet.microsoft.com/download/linux-package-manager/debian9/sdk-2.2.401
+FROM openjdk:${JAVA_VERSION}-jdk-slim-buster as build
+
+#FROM openjdk:8u222-jdk-slim-buster as build
+ 
+
+# Linux update
+RUN set -eux && \
+    apt-get update && \
+    apt-get install -y \
+    apt-utils && \
+    apt-get autoremove -y && \
+    apt-get upgrade -y
+WORKDIR /build
+
+WORKDIR /build
+
+# Spark deps
+RUN apt-get install -y --no-install-recommends \
+        wget curl
+
+
+### SPARK
+
+# SPARK_VERSION: 2.4.4
+# SPARK_SUFFIX: hadoop2.7
+# SPARK_SUFFIX: without-hadoop
+# SPARK_DOTNET_VERSION: 0.7.7# SPARK_DOTNET_TARGET_FRAMEWORK: netcoreapp2.1
+# JAVA_VERSION: 8u222
+# DOTNET_PACKAGE: aspnetcore-runtime-3.1
+# DOTNET_SDK_PACKAGE: dotnet-sdk-3.1
+# PROMETHEUS_EXPORTER_VERSION: 0.7.7
+# DELTA_CORE_VERSION: 0.7.7# HADOOP_AZURE_VERSION: 2.9.2
+# SCALA_BINARY_VERSION: 2.11
+# MAVEN_BASE_URL: https://repo.maven.apache.org/maven2
+# park-2.4.4-bin-without-hadoop.tgz
+ARG SPARK_VERSION=2.4.4
+ARG SPARK_SUFFIX=without-hadoop
+ARG SPARK_DIR=spark-${SPARK_VERSION}-bin-${SPARK_SUFFIX}
+ARG SPARK_FILE=${SPARK_DIR}.tgz
+ARG SPARK_URL=http://apache.mirror.amaze.com.au/spark/spark-${SPARK_VERSION}/${SPARK_FILE}
+# SPARK_URL=http://apache.mirror.amaze.com.au/spark/spark-2.4.4/spark-2.4.4-bin-without-hadoop.tgz
+
+mkdir -p /opt/spark-${SPARK_VERSION}
+mkdir -p /opt/spark-2.4.4
+
+ARG SPARK_URL=https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_FILE}
+
+tar xvzf spark-2.4.4-bin-without-hadoop.tgz -C /opt/spark-2.4.4 --strip-components=1
+
+export SPARK_HOME=/opt/spark-${SPARK_VERSION}
+export SPARK_HOME=/opt/spark-2.4.4
+
+ARG HADOOP_VERSION=2.10.0
+ARG HADOOP_URL=http://apache.mirror.amaze.com.au/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
+# http://apache.mirror.amaze.com.au/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz
+
+mkdir -p /opt/hadoop-${HADOOP_VERSION}
+mkdir -p /opt/hadoop-2.10.0
+
+export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
+export HADOOP_HOME=/opt/hadoop-2.10.0
+
+tar xvzf hadoop-2.10.0.tar.gz -C $HADOOP_HOME --strip-components=1
