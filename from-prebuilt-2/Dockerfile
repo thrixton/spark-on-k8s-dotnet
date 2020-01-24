@@ -239,6 +239,7 @@ RUN rm -f /bin/sh && \
     ln -svf /usr/bin/tini /sbin/tini
 
 # Hadoop install
+RUN echo "hdi ${HADOOP_INSTALL_DIR}"
 RUN mkdir -p ${HADOOP_INSTALL_DIR}
 COPY --from=build ${HADOOP_INSTALL_DIR} ${HADOOP_INSTALL_DIR}
 
