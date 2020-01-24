@@ -239,13 +239,13 @@ RUN rm -f /bin/sh && \
     ln -svf /usr/bin/tini /sbin/tini
 
 # Hadoop install
-RUN mkdir -p ${HADOOP_HOME}
-COPY --from=build ${HADOOP_INSTALL_DIR} ${HADOOP_HOME} 
+RUN mkdir -p $HADOOP_HOME
+COPY --from=build ${HADOOP_INSTALL_DIR} $HADOOP_HOME
 
 # Spark install
-RUN mkdir -p ${SPARK_HOME}/work-dir && \
-    ln -svf /usr/bin/dotnet ${SPARK_HOME}/work-dir/dotnet && \
-    touch ${SPARK_HOME}/RELEASE
+RUN mkdir -p $SPARK_HOME/work-dir && \
+    ln -svf /usr/bin/dotnet $SPARK_HOME/work-dir/dotnet && \
+    touch $SPARK_HOME/RELEASE
 COPY --from=build /build/spark/kubernetes/dockerfiles/spark/entrypoint.sh /opt/
 
 COPY --from=build ${SPARK_INSTALL_DIR} ${SPARK_HOME}
