@@ -180,7 +180,7 @@ ENV DOTNET_ROOT=/usr/share/dotnet \
     DOTNET_USE_POLLING_FILE_WATCHER=true
 
 # dotnet spark vars
-ENV DOTNET_WORKER_DIR=${SPARK_HOME}/dotnet/worker
+ENV DOTNET_WORKER_DIR=${SPARK_HOME}/dotnet-worker-${SPARK_DOTNET_VERSION}
 ENV SPARKDOTNET_ROOT=${DOTNET_WORKER_DIR} \
     DOTNET_WORKER=${DOTNET_WORKER_DIR}/Microsoft.Spark.Worker
 
@@ -253,11 +253,12 @@ COPY --from=build ${SPARK_INSTALL_DIR}/kubernetes/dockerfiles/spark/entrypoint.s
 
 COPY --from=build ${SPARK_INSTALL_DIR} ${SPARK_HOME}
 
-RUN spark-submit --version
+# TEMP - Pending config fixes
+#RUN spark-submit --version
 
 # dotnet spark install
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/bin/Release/netstandard2.0/debian.10-x64/publish/microsoft-spark-2.4.x-*.jar ${SPARK_HOME}/jars
-COPY --from=build ${SPARK_DOTNET_INSTALL_DIR} ${SPARK_DOTNET_INSTALL_DIR}
+COPY --from=build ${SPARK_DOTNET_INSTALL_DIR} ${DOTNET_WORKER_DIR}
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/artifacts/bin/Microsoft.Spark.CSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/artifacts/bin/Microsoft.Spark.FSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
 RUN chmod +x ${DOTNET_WORKER} && \
