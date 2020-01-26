@@ -137,6 +137,18 @@ RUN mkdir -p ${SPARK_DOTNET_INSTALL_DIR} && \
     dotnet add package Microsoft.Spark.Experimental --version ${SPARK_DOTNET_VERSION} && \
     dotnet publish -c Release -r debian.10-x64
 
+# dotnet spark source install
+RUN mkdir -p spark/dotnet && \
+    wget ${SPARK_DOTNET_SOURCE_URL} && \
+    tar xvzf ${SPARK_DOTNET_SOURCE_FILE} -C spark/dotnet --strip-components=1 && \
+    rm -f ${SPARK_DOTNET_SOURCE_FILE}
+
+# dotnet spark build
+WORKDIR /build/spark/dotnet
+RUN cd examples/Microsoft.Spark.CSharp.Examples && \
+    dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64 && \
+    cd ../Microsoft.Spark.FSharp.Examples && \
+    dotnet publish -c Release -f ${SPARK_DOTNET_TARGET_FRAMEWORK} -r debian.10-x64
 
 # References
 # https://dotnet.microsoft.com/download/linux-package-manager/debian9/runtime-2.2.6
