@@ -268,8 +268,10 @@ COPY --from=build ${SPARK_INSTALL_DIR}/kubernetes/dockerfiles/spark/entrypoint.s
 
 COPY --from=build ${SPARK_INSTALL_DIR} ${SPARK_HOME}
 
-# TEMP - Pending config fixes
-#RUN spark-submit --version
+RUN cp ${SPARK_HOME}/conf/spark-env.sh.template ${SPARK_HOME}/conf/spark-env.sh && \
+    echo 'export SPARK_DIST_CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath)' >> $SPARK_HOME/conf/spark-env.sh
+
+RUN spark-submit --version
 
 # dotnet spark install
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/bin/Release/netstandard2.0/debian.10-x64/publish/microsoft-spark-2.4.x-*.jar ${SPARK_HOME}/jars
