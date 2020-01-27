@@ -260,6 +260,8 @@ RUN rm -f /bin/sh && \
 RUN mkdir -p ${HADOOP_INSTALL_DIR}
 COPY --from=build ${HADOOP_INSTALL_DIR} ${HADOOP_INSTALL_DIR}
 
+run echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/hadoop-azure-${HADOOP_VERSION}.jar:$(ls ${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/azure-storage*)" >> ${HADOOP_INSTALL_DIR}/etc/hadoop/hadoop-env.sh
+
 # Spark install
 RUN mkdir -p ${SPARK_INSTALL_DIR}/work-dir && \
     ln -svf /usr/bin/dotnet ${SPARK_INSTALL_DIR}/work-dir/dotnet && \
