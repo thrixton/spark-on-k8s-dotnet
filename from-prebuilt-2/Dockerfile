@@ -286,5 +286,5 @@ COPY prometheus-conf/metrics.properties /etc/metrics/conf
 COPY prometheus-conf/prometheus.yaml /etc/metrics/conf
 
 # Entrypoint
-WORKDIR /opt/spark/work-dir
+WORKDIR /opt/${SPARK_DOTNET_INSTALL_DIR}/work-dir
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
