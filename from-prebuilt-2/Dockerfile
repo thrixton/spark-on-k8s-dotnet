@@ -273,8 +273,8 @@ COPY --from=build ${SPARK_INSTALL_DIR} ${SPARK_HOME}
 # dotnet spark install
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/bin/Release/netstandard2.0/debian.10-x64/publish/microsoft-spark-2.4.x-*.jar ${SPARK_HOME}/jars
 COPY --from=build ${SPARK_DOTNET_INSTALL_DIR} ${DOTNET_WORKER_DIR}
-COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/artifacts/bin/Microsoft.Spark.CSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
-COPY --from=build ${SPARK_DOTNET_INSTALL_DIR}/artifacts/bin/Microsoft.Spark.FSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
+COPY --from=build /build/spark/dotnet/artifacts/bin/Microsoft.Spark.CSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
+COPY --from=build /build/spark/dotnet/artifacts/bin/Microsoft.Spark.FSharp.Examples/Release/${SPARK_DOTNET_TARGET_FRAMEWORK}/debian.10-x64/publish ${SPARK_HOME}/work-dir
 RUN chmod +x ${DOTNET_WORKER} && \
     ln -svf ${DOTNET_WORKER} /usr/local/bin/Microsoft.Spark.Worker
 
