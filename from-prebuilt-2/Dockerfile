@@ -200,6 +200,7 @@ ENV DOTNET_WORKER_DIR=${SPARK_HOME}/dotnet-worker-${SPARK_DOTNET_VERSION}
 ENV SPARKDOTNET_ROOT=${DOTNET_WORKER_DIR} \
     DOTNET_WORKER=${DOTNET_WORKER_DIR}/Microsoft.Spark.Worker
 
+# dotnet azure credentials
 ARG AZURE_BLOB_ACCOUNT
 ARG AZURE_BLOB_KEY
 
@@ -293,7 +294,7 @@ ADD https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${
 COPY prometheus-conf/metrics.properties /etc/metrics/conf
 COPY prometheus-conf/prometheus.yaml /etc/metrics/conf
 
-RUN echo '#!bin/bash' > /opt/dotnet_debug.sh && \
+RUN echo '#!/bin/bash' > /opt/dotnet_debug.sh && \
     echo "spark-submit --class org.apache.spark.deploy.dotnet.DotnetRunner --conf spark.hadoop.fs.AbstractFileSystem.wasb.Impl=org.apache.hadoop.fs.azure.Wasb --conf spark.hadoop.fs.azure.account.key.${AZURE_BLOB_ACCOUNT}.blob.core.windows.net=${AZURE_BLOB_KEY} --master local $(ls $SPARK_HOME/jars/microsoft-spark*) debug" >> /opt/dotnet_debug.sh && \
     chmod +x /opt/dotnet_debug.sh
 
