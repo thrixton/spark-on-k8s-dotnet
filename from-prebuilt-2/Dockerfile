@@ -200,6 +200,9 @@ ENV DOTNET_WORKER_DIR=${SPARK_HOME}/dotnet-worker-${SPARK_DOTNET_VERSION}
 ENV SPARKDOTNET_ROOT=${DOTNET_WORKER_DIR} \
     DOTNET_WORKER=${DOTNET_WORKER_DIR}/Microsoft.Spark.Worker
 
+ARG AZURE_BLOB_ACCOUNT
+ARG AZURE_BLOB_KEY
+
 # Linux update
 RUN set -eux && \
     apt-get update && \
@@ -236,7 +239,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # dotnet deps
 RUN apt-get install -y --no-install-recommends \
-        apt-transport-https gnupg && \
+        apt-transport-https gnupg nano && \
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg && \
     mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ && \
     wget -q https://packages.microsoft.com/config/debian/10/prod.list && \
@@ -261,7 +264,7 @@ RUN rm -f /bin/sh && \
 RUN mkdir -p ${HADOOP_INSTALL_DIR}
 COPY --from=build ${HADOOP_INSTALL_DIR} ${HADOOP_INSTALL_DIR}
 
-run echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/hadoop-azure-${HADOOP_VERSION}.jar:$(ls ${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/azure-storage*)" >> ${HADOOP_INSTALL_DIR}/etc/hadoop/hadoop-env.sh
+RUN echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/hadoop-azure-${HADOOP_VERSION}.jar:$(ls ${HADOOP_INSTALL_DIR}/share/hadoop/tools/lib/azure-storage*)" >> ${HADOOP_INSTALL_DIR}/etc/hadoop/hadoop-env.sh
 
 # Spark install
 RUN mkdir -p ${SPARK_INSTALL_DIR}/work-dir && \
@@ -290,6 +293,11 @@ ADD https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${
 COPY prometheus-conf/metrics.properties /etc/metrics/conf
 COPY prometheus-conf/prometheus.yaml /etc/metrics/conf
 
+RUN echo '#!bin/bash' > /opt/dotnet_debug.sh && \
+    echo "spark-submit --class org.apache.spark.deploy.dotnet.DotnetRunner --conf spark.hadoop.fs.AbstractFileSystem.wasb.Impl=org.apache.hadoop.fs.azure.Wasb --conf spark.hadoop.fs.azure.account.key.${AZURE_BLOB_ACCOUNT}.blob.core.windows.net=${AZURE_BLOB_KEY} --master local $(ls $SPARK_HOME/jars/microsoft-spark*) debug" >> /opt/dotnet_debug.sh && \
+    chmod +x /opt/dotnet_debug.sh
+
 # Entrypoint
 WORKDIR ${SPARK_HOME}/work-dir
-ENTRYPOINT [ "/opt/entrypoint.sh" ]
+#ENTRYPOINT [ "/opt/entrypoint.sh" ]
+ENTRYPOINT [ "/opt/dotnet_debug.sh" ]
