@@ -296,6 +296,7 @@ COPY prometheus-conf/prometheus.yaml /etc/metrics/conf
 
 RUN echo '#!/bin/bash' > /opt/dotnet_debug.sh && \
     echo "exec /sbin/tini -s -- spark-submit --class org.apache.spark.deploy.dotnet.DotnetRunner --conf spark.hadoop.fs.AbstractFileSystem.wasb.Impl=org.apache.hadoop.fs.azure.Wasb --conf spark.hadoop.fs.azure.account.key.${AZURE_BLOB_ACCOUNT}.blob.core.windows.net=${AZURE_BLOB_KEY} --master local $(ls $SPARK_HOME/jars/microsoft-spark*) debug" >> /opt/dotnet_debug.sh && \
+    echo '/bin/sleep 5h' && \
     chmod +x /opt/dotnet_debug.sh
 
 # Entrypoint
