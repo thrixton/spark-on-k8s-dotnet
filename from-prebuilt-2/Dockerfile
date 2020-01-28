@@ -301,4 +301,4 @@ RUN echo '#!/bin/bash' > /opt/dotnet_debug.sh && \
 # Entrypoint
 WORKDIR ${SPARK_HOME}/work-dir
 #ENTRYPOINT [ "/opt/entrypoint.sh" ]
-ENTRYPOINT [ "/opt/dotnet_debug.sh&" ]
+ENTRYPOINT [ "/opt/dotnet_debug.sh" ]
